@@ -25,7 +25,7 @@ test('test', async ({ page }) => {
     await page.getByRole('button', { name: 'Search currency' }).click();
     await page.getByRole('option', { name: 'INR' }).click();
     await page.getByRole('button', { name: 'Search partner' }).click();
-    await page.getByRole('option', { name: 'Mane' }).click();
+    await page.getByRole('option', { name: 'Shant' }).click();
     await page.waitForTimeout(3000);
     await page.getByRole('button', { name: 'Save' }).click();
     await page.getByRole('button', { name: 'Add Line Item' }).click();

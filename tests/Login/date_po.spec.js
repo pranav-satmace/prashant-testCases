@@ -5,7 +5,7 @@ for (let day = 1; day <= 9; day++) {
   const dateId = `dp-2026-07-0${day}`;
 
   test(`PO and Receipt flow - date ${day}`, async ({ page }) => {
-    await page.goto('http://192.168.1.16:5000/login/');
+    await page.goto('https://test-vartul.satmace.com/login/');
     await page.locator('#id_username').fill('Prashant@satmace.com');
     await page.locator('#id_username').press('Tab');
     await page.getByRole('textbox', { name: 'Password' }).fill('Satma@201');

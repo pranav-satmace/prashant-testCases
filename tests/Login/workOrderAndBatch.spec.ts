@@ -1,0 +1,74 @@
+// tests/workOrderAndBatch.spec.ts
+import { test } from '@playwright/test';
+import { LoginPage } from '../../pages/login';
+import { WorkOrderPage } from '../../pages/WorkOrderPage';
+import { BatchPage } from '../../pages/BatchPage';
+import { TestData } from '../../utils/testData';
+
+test('Create Work Order and Batch - end to end flow', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const workOrderPage = new WorkOrderPage(page);
+  const batchPage = new BatchPage(page);
+
+  // Step 1: Login
+//   await loginPage.goto();
+  await loginPage.login(TestData.credentials.username, TestData.credentials.password);
+
+  // Step 2: Work Order create करणे व approve करणे
+  await workOrderPage.createWorkOrder({
+    warehouse: TestData.workOrder.warehouse,
+    skuSearchTerm: TestData.workOrder.outputSku,
+    skuOptionLabel: TestData.workOrder.outputSkuOption,
+    bom: TestData.workOrder.bom,
+    quantity: TestData.workOrder.quantity,
+    machine: TestData.workOrder.machine,
+  });
+
+  // Step 3: Batch create करणे
+  await batchPage.openBatchMenu();
+  await batchPage.selectLatestWorkOrder();
+  await batchPage.fillInitialDates();
+  await batchPage.selectUser(TestData.batch.userName);
+  await batchPage.saveBatch();
+
+  // Step 4: Lot add करणे
+  await batchPage.addLot(TestData.batch.lotNumber, TestData.batch.userName);
+
+  // Step 5: पहिला Input BIN + SKU निवडणे (Bale B)
+  await batchPage.selectBinAndSku(
+    TestData.batch.bin,
+    TestData.batch.inputSku1.searchTerm,
+    TestData.batch.inputSku1.optionLabel,
+  );
+
+  // Step 6: दुसरा Input BIN + SKU निवडणे (Bale L)
+  await batchPage.selectSecondBinAndSku(
+    TestData.batch.bin,
+    TestData.batch.inputSku2.searchTerm,
+    TestData.batch.inputSku2.optionLabel,
+  );
+
+  // Step 7: Output BIN + SKU निवडणे (Bale Final)
+  await batchPage.selectOutputBinAndSku(
+    TestData.batch.bin,
+    TestData.batch.outputSku.searchTerm,
+    TestData.batch.outputSku.optionLabel,
+  );
+
+  // Step 8: पहिली Lot quantity भरणे
+  await batchPage.fillLotQuantities(
+    TestData.batch.lot1.grossQuantity,
+    TestData.batch.lot1.packagedQuantity,
+  );
+
+  // Step 9: दुसरी Lot quantity भरणे
+  await batchPage.fillLotQuantities(
+    TestData.batch.lot2.grossQuantity,
+    TestData.batch.lot2.packagedQuantity,
+  );
+
+  // Step 10: Submit for approval, Save व Approve करणे
+  await batchPage.submitForApproval();
+  await batchPage.saveBatchFinal();
+  await batchPage.approveBatch();
+});

@@ -7,7 +7,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+
+  // ✅ Terminal + HTML दोन्ही ठिकाणी दिसण्यासाठी 'list' add केला, 'html' तसाच ठेवला
+  reporter: [
+    ['list'],
+    ['html', { open: 'never' }],
+  ],
 
   // ✅ हे add केले - 1000 loop साठी unlimited timeout
   timeout: 0,
@@ -16,6 +21,10 @@ export default defineConfig({
     trace: 'on-first-retry',
     actionTimeout: 30000,
     navigationTimeout: 60000,
+
+    // ✅ fail झालेल्या test चा exact problem HTML report मध्ये दिसण्यासाठी add केले
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   projects: [

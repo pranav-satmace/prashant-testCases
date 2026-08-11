@@ -15,11 +15,12 @@ test('Create Purchase Order with 2000 line items loop', async ({ page }) => {
   // ─── NAVIGATE TO CREATE PURCHASE ORDER ───────────────────────────────────
   await page.getByRole('link', { name: 'Purchase Order' }).click();
   await page.getByRole('link', { name: 'Create Purchase Order' }).click();
-  await page.waitForTimeout(3000);
-
+  // await page.waitForTimeout(3000);
+  
   // ─── FILL HEADER DETAILS ─────────────────────────────────────────────────
+  await page.waitForTimeout(3000);
   await page.getByRole('button', { name: 'Search warehouse' }).click();
-  await page.getByRole('option', { name: 'Panvel Collection Warehouse' }).click();
+  await page.getByRole('option', { name: 'Panvel Collection Warehouse', exact: true }).click();
 
   await page.getByRole('button', { name: 'Search currency' }).click();
   await page.getByRole('option', { name: 'INR' }).click();
