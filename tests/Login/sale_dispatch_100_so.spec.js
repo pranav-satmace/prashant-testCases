@@ -1,3 +1,4 @@
+//npx playwright test tests/Login/sale_dispatch_100_so.spec.js --project=chromium --headed
 import { test, expect } from '@playwright/test';
 
 test('Sales Dispatch - Select Available Sales Orders', async ({ page }) => {
@@ -43,8 +44,8 @@ test('Sales Dispatch - Select Available Sales Orders', async ({ page }) => {
     name: 'Search Sales Orders…'
   });
 
-  // Start from 1939 and check previous 100 numbers
-  for (let orderNo = 4012; orderNo >= 3912; orderNo--) {
+  // previous 100 numbers next(5981 to 5882) next (5881 to 5782)
+  for (let orderNo = 6081; orderNo >= 5982; orderNo--) {
 
     console.log(`Searching Sales Order: ${orderNo}`);
 

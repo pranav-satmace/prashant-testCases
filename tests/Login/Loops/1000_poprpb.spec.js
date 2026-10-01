@@ -1,3 +1,6 @@
+//npx playwright test tests/Login/Loops/1000_poprpb.spec.js --headed --project=chromium; `
+// single and dual UOM multipme entrys loop 
+
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
@@ -11,7 +14,7 @@ test('test', async ({ page }) => {
   // Loop 1000 times
   for (let i = 1; i <= 1000; i++) {
     // Generate bill number with padding (e.g., Test bil 001, Test bil 002, ...)
-    const billNumber = `Test bl ${String(i).padStart(3, '0')}`;
+    const billNumber = `Test b2 ${String(i).padStart(3, '0')}`;
     
     // Print progress to console
     console.log(`✅ Loop ${i}/1000 completed - Bill Number: ${billNumber}`);

@@ -1,3 +1,4 @@
+//npx playwright test tests/Login/Loops/so_link_poprpb.spec.js --headed --project=chromium; `
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {

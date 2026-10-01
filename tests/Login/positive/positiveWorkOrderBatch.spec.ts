@@ -1,4 +1,4 @@
-// tests/positive/positiveWorkOrderBatch.spec.ts
+// npx playwright test tests/Login/positive/positiveWorkOrderBatch.spec.ts --project=chromium --headed
 // 100 वेगवेगळ्या valid data-combinations सह पूर्ण Work Order + Batch flow run करतो.
 // प्रत्येक test terminal मध्ये स्वतंत्र ओळीत दिसेल आणि HTML report मध्ये स्वतंत्र entry असेल.
 

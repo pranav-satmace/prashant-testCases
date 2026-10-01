@@ -1,21 +1,31 @@
-import { test } from '@playwright/test';
-import { LoginPage } from '../../pages/login.js';
-import { PurchaseOrderPage } from '../../pages/purchaseOrderPage.js';
+// tests/Login/purchaseOrder.spec.js
+import { test, expect } from '@playwright/test';
+import { PurchaseOrderPage } from '../../pages/purchaseOrderPage';
 
 test('Create Purchase Order', async ({ page }) => {
-    const login = new LoginPage(page);
-    const po = new PurchaseOrderPage(page);
+  const po = new PurchaseOrderPage(page);
 
-    await login.login(
-        'Prashant@satmace.com',
-        'Satma@201'
-    );
+  // Create multiple items for the loop
+  const items = [];
+  for (let i = 1; i <= 1000; i++) {
+    items.push({
+      binSearch: 'qr',
+      binOption: 'QR BIN',
+      skuSearch: 'pani',
+      skuOption: 'Pani | Glass | Loose',
+      quantity: 100,
+      rate: 10,
+      taxGroup: 'GST 18%'
+    });
+  }
 
-    await po.createHeader();
+  // Create Purchase Order with all items
+  await po.createPurchaseOrder({
+    warehouse: 'Mumbai Warehouse',
+    currency: 'INR',
+    partner: 'Prashant',
+    items: items
+  });
 
-    for (let i = 1; i <= 1000; i++) {
-        await po.addItem(100, 10);
-    }
-
-    await po.approvePO();
+  await expect(page.getByText('Purchase Order created successfully')).toBeVisible();
 });

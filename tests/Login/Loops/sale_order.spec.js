@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-
+//  npx playwright test tests/Login/Loops/sale_order.spec.js --project=chromium --headed 
 test('test', async ({ page }) => {
   await page.goto('https://test-vartul.satmace.com/login/');
   await page.locator('#id_username').click();
